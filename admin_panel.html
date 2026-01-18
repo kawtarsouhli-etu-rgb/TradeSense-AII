@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeSense AI - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00E5FF',
+                        accent: '#00C853',
+                        background: '#0B0F19',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B0F19;
+            color: #E2E8F0;
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+        
+        .admin-sidebar {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .sidebar-item {
+            color: #94A3B8;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-item.active, .sidebar-item:hover {
+            color: #00E5FF;
+            background: rgba(0, 229, 255, 0.1);
+        }
+        
+        .table-row {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .status-active {
+            color: #00C853;
+            background: rgba(0, 200, 83, 0.1);
+        }
+        
+        .status-passed {
+            color: #00C853;
+            background: rgba(0, 200, 83, 0.1);
+        }
+        
+        .status-failed {
+            color: #EF4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+        
+        .status-completed {
+            color: #8B5CF6;
+            background: rgba(139, 92, 246, 0.1);
+        }
+        
+        .hidden-panel {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background">
+    <div class="flex h-screen">
+        <!-- Sidebar -->
+        <div class="admin-sidebar w-64 min-h-screen p-6">
+            <div class="flex items-center mb-8">
+                <i class="fas fa-shield-alt text-primary text-2xl mr-3"></i>
+                <span class="text-white text-xl font-bold">Admin<span class="text-primary">Panel</span></span>
+            </div>
+            
+            <nav class="space-y-2">
+                <a href="#" class="sidebar-item active flex items-center p-3 rounded-lg">
+                    <i class="fas fa-home mr-3"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" onclick="showSection('users')">
+                    <i class="fas fa-users mr-3"></i>
+                    Users
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" onclick="showSection('challenges')">
+                    <i class="fas fa-tasks mr-3"></i>
+                    Challenges
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" onclick="showSection('paypal')">
+                    <i class="fab fa-paypal mr-3"></i>
+                    PayPal Settings
+                </a>
+                <a href="#" class="sidebar-item flex items-center p-3 rounded-lg" onclick="showSection('stats')">
+                    <i class="fas fa-chart-bar mr-3"></i>
+                    Statistics
+                </a>
+            </nav>
+            
+            <div class="absolute bottom-6 left-6 right-6">
+                <button class="w-full bg-red-500/20 hover:bg-red-500/30 text-red-400 py-3 rounded-lg font-semibold transition-colors border border-red-500/30">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8 overflow-y-auto">
+            <!-- Admin Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-white mb-2">Admin Dashboard</h1>
+                <p class="text-gray-400">Manage your TradeSense AI platform</p>
+            </div>
+
+            <!-- Dashboard Stats -->
+            <div id="dashboard" class="admin-section">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <div class="glass-card p-6">
+                        <div class="text-2xl font-bold text-primary mb-1" id="total-users">0</div>
+                        <div class="text-gray-400">Total Users</div>
+                    </div>
+                    <div class="glass-card p-6">
+                        <div class="text-2xl font-bold text-accent mb-1" id="active-challenges">0</div>
+                        <div class="text-gray-400">Active Challenges</div>
+                    </div>
+                    <div class="glass-card p-6">
+                        <div class="text-2xl font-bold text-primary mb-1" id="passed-challenges">0</div>
+                        <div class="text-gray-400">Passed Challenges</div>
+                    </div>
+                    <div class="glass-card p-6">
+                        <div class="text-2xl font-bold text-red-400 mb-1" id="failed-challenges">0</div>
+                        <div class="text-gray-400">Failed Challenges</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-semibold text-white mb-4">Recent Activity</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-user-plus text-primary"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-white">New User Registered</div>
+                                        <div class="text-sm text-gray-400">john@example.com</div>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-400">2 mins ago</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-trophy text-accent"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-white">Challenge Passed</div>
+                                        <div class="text-sm text-gray-400">User: jane@example.com</div>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-400">15 mins ago</span>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-gray-800/30 rounded-lg">
+                                <div class="flex items-center">
+                                    <div class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center mr-3">
+                                        <i class="fas fa-exclamation-triangle text-red-400"></i>
+                                    </div>
+                                    <div>
+                                        <div class="font-medium text-white">Challenge Failed</div>
+                                        <div class="text-sm text-gray-400">User: bob@example.com</div>
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-400">1 hour ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-semibold text-white mb-4">Quick Actions</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <button class="glass-card p-4 text-center hover:bg-white/10 transition-colors" onclick="showSection('users')">
+                                <i class="fas fa-users text-primary text-2xl mb-2"></i>
+                                <div class="text-white font-medium">Manage Users</div>
+                            </button>
+                            <button class="glass-card p-4 text-center hover:bg-white/10 transition-colors" onclick="showSection('challenges')">
+                                <i class="fas fa-tasks text-accent text-2xl mb-2"></i>
+                                <div class="text-white font-medium">Challenges</div>
+                            </button>
+                            <button class="glass-card p-4 text-center hover:bg-white/10 transition-colors" onclick="showSection('paypal')">
+                                <i class="fab fa-paypal text-blue-400 text-2xl mb-2"></i>
+                                <div class="text-white font-medium">PayPal Settings</div>
+                            </button>
+                            <button class="glass-card p-4 text-center hover:bg-white/10 transition-colors">
+                                <i class="fas fa-cog text-gray-400 text-2xl mb-2"></i>
+                                <div class="text-white font-medium">System Config</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="users" class="admin-section hidden-panel">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-white">Users Management</h2>
+                    <div class="flex space-x-4">
+                        <input type="text" placeholder="Search users..." class="bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2 text-white">
+                        <button class="bg-primary hover:bg-primary/90 text-gray-900 px-4 py-2 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-search mr-2"></i>Search
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-700">
+                            <thead class="bg-gray-800/50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">User</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Email</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Role</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Created</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-700">
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <div class="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center">
+                                                    <span class="text-primary font-bold">JD</span>
+                                                </div>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-white">John Doe</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">john@example.com</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-900/30 text-blue-400">
+                                            User
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-900/30 text-green-400">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">2024-01-15</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <button class="text-yellow-400 hover:text-yellow-300 mr-3" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-400 hover:text-red-300" title="Deactivate" onclick="confirmDeleteUser(1)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0 h-10 w-10">
+                                                <div class="h-10 w-10 rounded-full bg-accent/20 flex items-center justify-center">
+                                                    <span class="text-accent font-bold">SR</span>
+                                                </div>
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium text-white">Sarah Wilson</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">sarah@example.com</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-900/30 text-purple-400">
+                                            VIP
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-900/30 text-green-400">
+                                            Active
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">2024-01-10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                        <button class="text-yellow-400 hover:text-yellow-300 mr-3" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="text-red-400 hover:text-red-300" title="Deactivate" onclick="confirmDeleteUser(2)">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-gray-800/50 px-6 py-3 flex items-center justify-between">
+                        <div class="text-sm text-gray-400">Showing 1 to 2 of 2 results</div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 rounded bg-gray-700/50 text-gray-300 hover:bg-gray-600/50">Previous</button>
+                            <button class="px-3 py-1 rounded bg-primary text-gray-900 hover:bg-primary/90">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Challenges Section -->
+            <div id="challenges" class="admin-section hidden-panel">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-white">Challenges Management</h2>
+                    <div class="flex space-x-4">
+                        <select class="bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2 text-white">
+                            <option>All Status</option>
+                            <option>Active</option>
+                            <option>Passed</option>
+                            <option>Failed</option>
+                        </select>
+                        <input type="text" placeholder="Search challenges..." class="bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2 text-white">
+                        <button class="bg-primary hover:bg-primary/90 text-gray-900 px-4 py-2 rounded-lg font-semibold transition-colors">
+                            <i class="fas fa-search mr-2"></i>Search
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-700">
+                            <thead class="bg-gray-800/50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Challenge</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">User</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Plan</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Balance</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Status</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-700">
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-white">#12345</div>
+                                        <div class="text-sm text-gray-400">Created: 2024-01-15</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-white">John Doe</div>
+                                        <div class="text-sm text-gray-400">john@example.com</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-900/30 text-blue-400">
+                                            Pro Plan
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">$45,230.50</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-active">
+                                            ACTIVE
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <select class="bg-gray-800/50 border border-gray-700 rounded px-2 py-1 text-sm text-white" onchange="updateChallengeStatus(1, this.value)">
+                                            <option value="">Change Status</option>
+                                            <option value="ACTIVE">Active</option>
+                                            <option value="PASSED">Passed</option>
+                                            <option value="FAILED">Failed</option>
+                                            <option value="COMPLETED">Completed</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="table-row">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-white">#12346</div>
+                                        <div class="text-sm text-gray-400">Created: 2024-01-14</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-white">Sarah Wilson</div>
+                                        <div class="text-sm text-gray-400">sarah@example.com</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-900/30 text-purple-400">
+                                            Elite Plan
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">$98,765.20</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-passed">
+                                            PASSED
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm space-x-2">
+                                        <select class="bg-gray-800/50 border border-gray-700 rounded px-2 py-1 text-sm text-white" onchange="updateChallengeStatus(2, this.value)">
+                                            <option value="">Change Status</option>
+                                            <option value="ACTIVE">Active</option>
+                                            <option value="PASSED">Passed</option>
+                                            <option value="FAILED">Failed</option>
+                                            <option value="COMPLETED">Completed</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="bg-gray-800/50 px-6 py-3 flex items-center justify-between">
+                        <div class="text-sm text-gray-400">Showing 1 to 2 of 2 results</div>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1 rounded bg-gray-700/50 text-gray-300 hover:bg-gray-600/50">Previous</button>
+                            <button class="px-3 py-1 rounded bg-primary text-gray-900 hover:bg-primary/90">Next</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PayPal Settings Section -->
+            <div id="paypal" class="admin-section hidden-panel">
+                <h2 class="text-2xl font-bold text-white mb-6">PayPal Settings</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-semibold text-white mb-4">Current Settings</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Mode</label>
+                                <select id="paypal-mode" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2 text-white">
+                                    <option value="sandbox">Sandbox</option>
+                                    <option value="live">Live</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Client ID</label>
+                                <input type="text" id="paypal-client-id" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2 text-white" placeholder="Enter PayPal Client ID">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-300 mb-2">Client Secret</label>
+                                <input type="password" id="paypal-client-secret" class="w-full bg-gray-800/50 border border-gray-700 rounded-lg px-4 py-2 text-white" placeholder="Enter PayPal Client Secret">
+                            </div>
+                            <div class="flex items-center">
+                                <input type="checkbox" id="paypal-active" class="rounded bg-gray-800/50 border-gray-700 text-primary focus:ring-primary">
+                                <label for="paypal-active" class="ml-2 block text-sm text-gray-300">Activate PayPal</label>
+                            </div>
+                        </div>
+                        <button class="w-full mt-6 bg-primary hover:bg-primary/90 text-gray-900 py-3 rounded-lg font-semibold transition-colors" onclick="updatePayPalCredentials()">
+                            <i class="fas fa-save mr-2"></i>Save Settings
+                        </button>
+                    </div>
+
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-semibold text-white mb-4">Test Credentials</h3>
+                        <div class="bg-gray-800/30 rounded-lg p-4 mb-4">
+                            <h4 class="font-medium text-white mb-2">Sandbox Credentials</h4>
+                            <p class="text-sm text-gray-400 mb-2">Use these for testing:</p>
+                            <div class="text-xs text-gray-300 font-mono">
+                                Client ID: sandbox_client_id_here<br>
+                                Client Secret: sandbox_secret_here
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-800/30 rounded-lg p-4">
+                            <h4 class="font-medium text-white mb-2">Live Credentials</h4>
+                            <p class="text-sm text-gray-400 mb-2">Use these for production:</p>
+                            <div class="text-xs text-gray-300 font-mono">
+                                Client ID: live_client_id_here<br>
+                                Client Secret: live_secret_here
+                            </div>
+                        </div>
+                        
+                        <button class="w-full mt-6 bg-gray-700/50 hover:bg-gray-600/50 text-white py-3 rounded-lg font-semibold transition-colors border border-gray-600" onclick="testPayPalConnection()">
+                            <i class="fas fa-plug mr-2"></i>Test Connection
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div id="stats" class="admin-section hidden-panel">
+                <h2 class="text-2xl font-bold text-white mb-6">Platform Statistics</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="glass-card p-6 text-center">
+                        <div class="text-3xl font-bold text-white mb-2" id="stat-total-users">0</div>
+                        <div class="text-gray-400">Total Users</div>
+                    </div>
+                    <div class="glass-card p-6 text-center">
+                        <div class="text-3xl font-bold text-primary mb-2" id="stat-active-users">0</div>
+                        <div class="text-gray-400">Active Users</div>
+                    </div>
+                    <div class="glass-card p-6 text-center">
+                        <div class="text-3xl font-bold text-accent mb-2" id="stat-total-challenges">0</div>
+                        <div class="text-gray-400">Total Challenges</div>
+                    </div>
+                    <div class="glass-card p-6 text-center">
+                        <div class="text-3xl font-bold text-purple-400 mb-2" id="stat-revenue">0</div>
+                        <div class="text-gray-400">Revenue (USD)</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-semibold text-white mb-4">User Growth</h3>
+                        <div class="h-64 flex items-center justify-center text-gray-400">
+                            <i class="fas fa-chart-line text-4xl mb-2"></i>
+                            <p>User Growth Chart</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6">
+                        <h3 class="text-xl font-semibold text-white mb-4">Challenge Success Rate</h3>
+                        <div class="h-64 flex items-center justify-center text-gray-400">
+                            <i class="fas fa-chart-pie text-4xl mb-2"></i>
+                            <p>Success/Failure Rates</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Section management
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.admin-section').forEach(section => {
+                section.classList.add('hidden-panel');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden-panel');
+            
+            // Update active sidebar item
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Find and activate the clicked sidebar item
+            event.target.closest('.sidebar-item')?.classList.add('active');
+        }
+
+        // Simulate API calls with mock data
+        function loadDashboardStats() {
+            // In a real implementation, this would call the API
+            document.getElementById('total-users').textContent = '1,247';
+            document.getElementById('active-challenges').textContent = '89';
+            document.getElementById('passed-challenges').textContent = '342';
+            document.getElementById('failed-challenges').textContent = '156';
+        }
+
+        function updateChallengeStatus(challengeId, newStatus) {
+            if (!newStatus) return;
+            
+            if (confirm(`Are you sure you want to change challenge ${challengeId} status to ${newStatus}?`)) {
+                // In a real implementation, this would call the API
+                // fetch(`/api/admin/challenges/${challengeId}/status`, {
+                //     method: 'PUT',
+                //     headers: {
+                //         'Authorization': `Bearer ${localStorage.getItem('admin_token')}`,
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify({ status: newStatus })
+                // })
+                
+                alert(`Challenge ${challengeId} status updated to ${newStatus}`);
+                
+                // Update the UI to reflect the change
+                const row = event.target.closest('tr');
+                const statusCell = row.querySelector('td:nth-child(5)');
+                statusCell.innerHTML = `<span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-${newStatus.toLowerCase()}">${newStatus}</span>`;
+            }
+        }
+
+        function confirmDeleteUser(userId) {
+            if (confirm(`Are you sure you want to deactivate user ${userId}?`)) {
+                // In a real implementation, this would call the API
+                // fetch(`/api/admin/users/${userId}`, {
+                //     method: 'DELETE',
+                //     headers: {
+                //         'Authorization': `Bearer ${localStorage.getItem('admin_token')}`
+                //     }
+                // })
+                
+                alert(`User ${userId} deactivated`);
+            }
+        }
+
+        function updatePayPalCredentials() {
+            const mode = document.getElementById('paypal-mode').value;
+            const clientId = document.getElementById('paypal-client-id').value;
+            const clientSecret = document.getElementById('paypal-client-secret').value;
+            const isActive = document.getElementById('paypal-active').checked;
+            
+            if (!clientId || !clientSecret) {
+                alert('Please enter both Client ID and Client Secret');
+                return;
+            }
+            
+            // In a real implementation, this would call the API
+            // fetch('/api/admin/paypal/credentials', {
+            //     method: 'POST',
+            //     headers: {
+            //         'Authorization': `Bearer ${localStorage.getItem('admin_token')}`,
+            //         'Content-Type': 'application/json'
+            //     },
+            //     body: JSON.stringify({
+            //         mode: mode,
+            //         client_id: clientId,
+            //         client_secret: clientSecret,
+            //         is_active: isActive
+            //     })
+            // })
+            
+            alert('PayPal credentials updated successfully!');
+        }
+
+        function testPayPalConnection() {
+            // In a real implementation, this would call the API
+            alert('Testing PayPal connection...');
+        }
+
+        // Initialize the dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDashboardStats();
+            
+            // Set dashboard as active section initially
+            showSection('dashboard');
+        });
+
+        // Add active class to clicked sidebar items
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>

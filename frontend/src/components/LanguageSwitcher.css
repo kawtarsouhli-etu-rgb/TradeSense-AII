@@ -1,0 +1,128 @@
+/* src/components/LanguageSwitcher.css */
+.language-switcher {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background: rgba(30, 41, 59, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+  background: rgba(55, 65, 81, 0.4);
+}
+
+.language-flag {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.language-arrow {
+  font-size: 10px;
+  margin-left: 4px;
+  transition: transform 0.2s ease;
+}
+
+.language-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1000;
+  display: block; /* Will be rendered conditionally in JSX */
+  min-width: 160px;
+  padding: 4px 0;
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #e2e8f0;
+  text-align: left;
+  list-style: none;
+  background: rgba(30, 41, 59, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Show class for alternative implementation */
+.dropdown-menu.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  clear: both;
+  font-weight: 400;
+  color: #e2e8f0;
+  text-align: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-item.active {
+  background-color: rgba(0, 229, 255, 0.1);
+  color: #00e5ff;
+}
+
+/* RTL support for Arabic */
+[dir="rtl"] .dropdown-menu {
+  left: 0;
+  right: auto;
+}
+
+[dir="rtl"] .dropdown-toggle {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .language-arrow {
+  margin-right: 4px;
+  margin-left: 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    min-width: 140px;
+    font-size: 13px;
+  }
+  
+  .dropdown-toggle {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}

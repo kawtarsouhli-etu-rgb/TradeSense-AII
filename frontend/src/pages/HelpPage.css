@@ -1,0 +1,182 @@
+.help-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  color: white;
+  padding: 2rem 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.help-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.help-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.help-header p {
+  color: #94a3b8;
+  font-size: 1.2rem;
+}
+
+.help-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.help-category {
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 16px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.help-category h2 {
+  color: #3b82f6;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.help-category ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.help-category li {
+  margin-bottom: 0.75rem;
+}
+
+.help-category a {
+  color: #cbd5e1;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  display: block;
+  transition: all 0.3s ease;
+  border-left: 3px solid transparent;
+}
+
+.help-category a:hover {
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  border-left-color: #3b82f6;
+}
+
+.help-faq {
+  margin-bottom: 3rem;
+}
+
+.help-faq h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #10b981;
+}
+
+.faq-item {
+  background: rgba(30, 41, 59, 0.8);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.faq-item h3 {
+  margin: 0;
+  padding: 1.5rem;
+  background: rgba(59, 130, 246, 0.1);
+  color: #3b82f6;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.faq-item h3:hover {
+  background: rgba(59, 130, 246, 0.2);
+}
+
+.faq-item p {
+  margin: 0;
+  padding: 1.5rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+.help-contact {
+  text-align: center;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-top: 2rem;
+}
+
+.help-contact h2 {
+  color: #10b981;
+  margin-bottom: 1rem;
+}
+
+.help-contact p {
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #10b981);
+  color: white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+  .help-page {
+    padding: 1rem 0;
+  }
+  
+  .help-header h1 {
+    font-size: 2rem;
+  }
+  
+  .help-categories {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .help-category {
+    padding: 1.5rem;
+  }
+  
+  .help-faq h2 {
+    font-size: 1.5rem;
+  }
+}

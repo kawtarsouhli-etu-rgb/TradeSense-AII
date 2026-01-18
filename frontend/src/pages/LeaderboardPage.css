@@ -1,0 +1,80 @@
+.leaderboard-page {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.leaderboard-header {
+  margin-bottom: 2rem;
+}
+
+.leaderboard-header h1 {
+  margin-bottom: 0.5rem;
+}
+
+.leaderboard-header p {
+  color: var(--text-secondary);
+}
+
+.leaderboard-table {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+thead {
+  background: var(--bg-dark);
+}
+
+th {
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+}
+
+td {
+  padding: 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+tr.top-1 {
+  background: rgba(255, 215, 0, 0.05);
+}
+
+tr.top-2 {
+  background: rgba(192, 192, 192, 0.05);
+}
+
+tr.top-3 {
+  background: rgba(205, 127, 50, 0.05);
+}
+
+.rank {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.trader-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.trader-info small {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 968px) {
+  table {
+    font-size: 0.85rem;
+  }
+  
+  th, td {
+    padding: 0.75rem 0.5rem;
+  }
+}

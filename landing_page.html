@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TradeSense AI - Professional Prop Trading Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00E5FF',
+                        accent: '#00C853',
+                        background: '#0B0F19',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B0F19;
+            color: #E2E8F0;
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #0B0F19 0%, #1A2238 50%, #0B0F19 100%);
+        }
+        
+        .feature-glow {
+            box-shadow: 0 0 30px rgba(0, 229, 255, 0.2);
+        }
+        
+        .pricing-glow {
+            box-shadow: 0 0 40px rgba(0, 200, 83, 0.3);
+        }
+        
+        .pulse-button {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 229, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0); }
+        }
+        
+        .floating-animation {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .trusted-by {
+            background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.1), transparent);
+        }
+    </style>
+</head>
+<body class="bg-background">
+    <!-- Navigation -->
+    <nav class="bg-gray-900/80 backdrop-blur-md border-b border-gray-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-4">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-chart-line text-primary text-2xl mr-2"></i>
+                        <span class="text-white text-xl font-bold">Trade<span class="text-primary">Sense</span>.AI</span>
+                    </div>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#features" class="text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Features</a>
+                        <a href="#pricing" class="text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Pricing</a>
+                        <a href="#contact" class="text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button class="bg-gray-800/50 hover:bg-gray-700/50 text-white px-4 py-2 rounded-lg font-semibold transition-colors">
+                        Login
+                    </button>
+                    <button class="bg-primary hover:bg-primary/90 text-gray-900 px-6 py-2 rounded-lg font-semibold transition-colors pulse-button">
+                        Sign Up Free
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <div class="inline-flex items-center bg-gray-800/50 rounded-full px-4 py-2 mb-8 border border-gray-700">
+                    <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></span>
+                    <span class="text-sm text-gray-300">Live Trading Platform • 50K+ Active Traders</span>
+                </div>
+                
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    <span class="text-white">Professional</span>
+                    <br>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">
+                        Prop Trading
+                    </span>
+                </h1>
+                
+                <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+                    Join thousands of successful traders using our AI-powered platform. Get instant access to professional-grade tools, real-time analytics, and institutional liquidity.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <button class="bg-primary hover:bg-primary/90 text-gray-900 px-8 py-4 rounded-xl font-semibold text-lg transition-all pulse-button shadow-lg shadow-primary/25">
+                        <i class="fas fa-bolt mr-2"></i>Start Trading Challenge
+                    </button>
+                    <button class="bg-gray-800/50 hover:bg-gray-700/50 text-white px-8 py-4 rounded-xl font-semibold text-lg border border-gray-700 transition-all">
+                        <i class="fas fa-play-circle mr-2"></i>Watch Demo
+                    </button>
+                </div>
+                
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                    <div class="glass-card p-6 text-center feature-glow">
+                        <div class="text-3xl font-bold text-primary mb-2">99.9%</div>
+                        <div class="text-gray-400">Platform Uptime</div>
+                    </div>
+                    <div class="glass-card p-6 text-center">
+                        <div class="text-3xl font-bold text-accent mb-2">10ms</div>
+                        <div class="text-gray-400">Average Execution</div>
+                    </div>
+                    <div class="glass-card p-6 text-center">
+                        <div class="text-3xl font-bold text-primary mb-2">$2.4B+</div>
+                        <div class="text-gray-400">Daily Volume</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By Section -->
+    <section class="py-12 trusted-by">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <p class="text-gray-400">Trusted by professional traders worldwide</p>
+            </div>
+            <div class="flex flex-wrap justify-center items-center gap-12 opacity-60">
+                <div class="text-2xl font-bold text-white">Goldman Sachs</div>
+                <div class="text-2xl font-bold text-white">JP Morgan</div>
+                <div class="text-2xl font-bold text-white">Citigroup</div>
+                <div class="text-2xl font-bold text-white">Morgan Stanley</div>
+                <div class="text-2xl font-bold text-white">Barclays</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Professional Trading <span class="text-primary">Features</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Everything you need to succeed in today's competitive trading environment
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- AI Trading -->
+                <div class="glass-card p-8 feature-glow floating-animation">
+                    <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-brain text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">AI-Powered Trading</h3>
+                    <p class="text-gray-400 mb-6">
+                        Advanced machine learning algorithms analyze market patterns in real-time, providing predictive insights and automated trading signals with 95% accuracy.
+                    </p>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Real-time market analysis</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Predictive trend identification</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Automated trading signals</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Risk assessment algorithms</li>
+                    </ul>
+                </div>
+
+                <!-- News Hub -->
+                <div class="glass-card p-8 feature-glow">
+                    <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-newspaper text-accent text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Real-Time News Hub</h3>
+                    <p class="text-gray-400 mb-6">
+                        Stay ahead of market-moving news with our curated feed of financial news, economic events, and company announcements affecting your positions.
+                    </p>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Instant news alerts</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Economic calendar integration</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Sentiment analysis</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Impact scoring</li>
+                    </ul>
+                </div>
+
+                <!-- Community -->
+                <div class="glass-card p-8 feature-glow">
+                    <div class="w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Trader Community</h3>
+                    <p class="text-gray-400 mb-6">
+                        Connect with thousands of professional traders, share strategies, discuss market insights, and learn from experienced professionals.
+                    </p>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Live chat rooms</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Strategy sharing</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Mentorship programs</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Performance leaderboards</li>
+                    </ul>
+                </div>
+
+                <!-- MasterClass -->
+                <div class="glass-card p-8 feature-glow floating-animation">
+                    <div class="w-16 h-16 bg-accent/20 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-graduation-cap text-accent text-2xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Trading MasterClass</h3>
+                    <p class="text-gray-400 mb-6">
+                        Learn from industry experts with comprehensive courses, live workshops, and personalized coaching to accelerate your trading journey.
+                    </p>
+                    <ul class="space-y-3 text-gray-300">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Expert-led courses</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Live trading sessions</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Personalized coaching</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Certification programs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Simple, Transparent <span class="text-primary">Pricing</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Choose the perfect plan for your trading goals. All plans include full platform access.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Starter Plan -->
+                <div class="glass-card p-8 border border-gray-700">
+                    <h3 class="text-2xl font-bold text-white mb-4">Starter</h3>
+                    <div class="text-4xl font-bold text-primary mb-2">$29</div>
+                    <div class="text-gray-400 mb-6">per month</div>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> $10,000 Challenge Capital</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Basic AI Analytics</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> 500 Trades/Month</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Community Access</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Email Support</li>
+                    </ul>
+                    <button class="w-full bg-gray-800/50 hover:bg-gray-700/50 text-white py-3 rounded-lg font-semibold transition-colors border border-gray-700">
+                        Get Started
+                    </button>
+                </div>
+
+                <!-- Pro Plan (Featured) -->
+                <div class="glass-card p-8 pricing-glow relative border-2 border-primary/50 transform scale-105">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                        <span class="bg-primary text-gray-900 px-4 py-1 rounded-full text-sm font-semibold">Most Popular</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Professional</h3>
+                    <div class="text-4xl font-bold text-primary mb-2">$99</div>
+                    <div class="text-gray-400 mb-6">per month</div>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> $50,000 Challenge Capital</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Advanced AI Analytics</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Unlimited Trades</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> All Features Included</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Priority Support</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> MasterClass Access</li>
+                    </ul>
+                    <button class="w-full bg-primary hover:bg-primary/90 text-gray-900 py-3 rounded-lg font-semibold transition-colors pulse-button">
+                        Start Free Trial
+                    </button>
+                </div>
+
+                <!-- Elite Plan -->
+                <div class="glass-card p-8 border border-gray-700">
+                    <h3 class="text-2xl font-bold text-white mb-4">Elite</h3>
+                    <div class="text-4xl font-bold text-accent mb-2">$299</div>
+                    <div class="text-gray-400 mb-6">per month</div>
+                    <ul class="space-y-3 text-gray-300 mb-8">
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> $100,000 Challenge Capital</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Premium AI Analytics</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Unlimited Trades</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> All Features Included</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> 24/7 Dedicated Support</li>
+                        <li class="flex items-center"><i class="fas fa-check-circle text-accent mr-3"></i> Private Mentor Sessions</li>
+                    </ul>
+                    <button class="w-full bg-accent hover:bg-accent/90 text-gray-900 py-3 rounded-lg font-semibold transition-colors">
+                        Contact Sales
+                    </button>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <p class="text-gray-400">All plans include a 14-day free trial. Cancel anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    Trusted by <span class="text-primary">Professionals</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-primary font-bold">JD</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white">John D.</div>
+                            <div class="text-sm text-gray-400">Professional Trader</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"TradeSense AI transformed my trading approach. The AI analytics helped me achieve 300% better results."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-accent font-bold">SR</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white">Sarah R.</div>
+                            <div class="text-sm text-gray-400">Quant Trader</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"The community and masterclasses accelerated my learning curve. Now consistently profitable."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+
+                <div class="glass-card p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
+                            <span class="text-primary font-bold">MR</span>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-white">Mike R.</div>
+                            <div class="text-sm text-gray-400">Institutional Trader</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Professional-grade platform with institutional liquidity. The execution speed is unmatched."</p>
+                    <div class="flex text-yellow-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 hero-gradient">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                Ready to Start Your <span class="text-primary">Trading Journey?</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-10">
+                Join thousands of successful traders and start your professional trading career today.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button class="bg-primary hover:bg-primary/90 text-gray-900 px-8 py-4 rounded-xl font-semibold text-lg transition-all pulse-button">
+                    <i class="fas fa-bolt mr-2"></i>Start Trading Challenge
+                </button>
+                <button class="bg-gray-800/50 hover:bg-gray-700/50 text-white px-8 py-4 rounded-xl font-semibold text-lg border border-gray-700 transition-all">
+                    <i class="fas fa-comments mr-2"></i>Schedule Demo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-gray-900/80 backdrop-blur-md border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <i class="fas fa-chart-line text-primary text-xl"></i>
+                        <span class="text-white text-lg font-bold">TradeSense.AI</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        Professional prop trading platform with AI-powered analytics and institutional-grade security.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-primary transition-colors">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Platform</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-colors">Trading Terminal</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Analytics</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">API Access</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Mobile App</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-colors">Learning Center</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Webinars</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Community</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-primary transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Documentation</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Status</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center">
+                <p class="text-gray-400 text-sm">
+                    © 2024 TradeSense AI. All rights reserved. 
+                    <span class="block mt-2">
+                        Risk Disclosure: Trading involves substantial risk and may not be suitable for all investors.
+                    </span>
+                </p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
