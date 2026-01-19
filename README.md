@@ -10,14 +10,17 @@ TradeSense AI est une plateforme de trading avancée qui combine intelligence ar
 - 🏆 **Classement** - Compétition entre traders avec classement en temps réel
 - 💰 **Financement Réel** - Devenez trader financé après avoir réussi les challenges
 - 📚 **Centre MasterClass** - Cours d'éducation complète sur le trading
+- 🌐 **Actualités en Direct** - Hub d'informations financières instantanées
+- 👥 **Zone Communautaire** - Discussions avec traders et partage de stratégies
 
 ## Technologies Utilisées
 
 - **Backend**: Flask, SQLAlchemy, MySQL
 - **Frontend**: React, Vite, Tailwind CSS
-- **API**: Yahoo Finance, TradingView Lightweight Charts
+- **API**: Yahoo Finance, TradingView Lightweight Charts, BeautifulSoup (pour les données marocaines)
 - **Authentification**: JWT Tokens
 - **Paiement**: PayPal Sandbox Integration
+- **Internationalisation**: i18next pour le support multilingue (français/arabe/anglais)
 
 ## Installation
 
@@ -59,13 +62,19 @@ TradeSense/
 │   ├── app.py
 │   ├── models.py
 │   ├── services/
+│   ├── routes/
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
 │   │   ├── pages/
-│   │   └── context/
+│   │   ├── context/
+│   │   ├── services/
+│   │   └── utils/
+│   ├── public/
 │   └── package.json
+├── database/
+│   └── schema.sql
 └── README.md
 ```
 
@@ -76,6 +85,13 @@ Configurez les variables suivantes dans un fichier `.env`:
 - `SECRET_KEY` - Clé secrète pour les JWT
 - `PAYPAL_CLIENT_ID` - Identifiant client PayPal
 - `PAYPAL_SECRET` - Secret PayPal
+
+## Base de Données
+
+Le fichier `database/schema.sql` contient le schéma complet de la base de données avec :
+- Tables pour les utilisateurs, challenges, trades, paiements
+- Données initiales pour l'administrateur
+- Exemples de données de marché
 
 ## License
 
